@@ -961,7 +961,7 @@ ARPACK_FLAGS += LDFLAGS="-Wl,-rpath,'$(build_libdir)'"
 endif
 
 arpack-ng-$(ARPACK_VER).tar.gz:
-	$(JLDOWNLOAD) $@ http://forge.scilab.org/index.php/p/arpack-ng/downloads/get/arpack-ng-$(ARPACK_VER).tar.gz
+	$(JLDOWNLOAD) $@ http://forge.scilab.org/index.php/p/arpack-ng/downloads/get/arpack-ng_$(ARPACK_VER).tar.gz
 	touch -c $@
 arpack-ng-$(ARPACK_VER)/configure: arpack-ng-$(ARPACK_VER).tar.gz
 	$(TAR) zxf $< 

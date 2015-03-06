@@ -201,6 +201,7 @@ LLVM_GIT_URL_COMPILER_RT ?= $(LLVM_GIT_URL_BASE)/compiler-rt.git
 LLVM_GIT_URL_LLDB ?= $(LLVM_GIT_URL_BASE)/lldb.git
 LLVM_GIT_URL_LIBCXX ?= $(LLVM_GIT_URL_BASE)/libcxx.git
 LLVM_GIT_URL_LIBCXXABI ?= $(LLVM_GIT_URL_BASE)/libcxxabi.git
+LLVM_GIT_URL_POLLY ?= $(LLVM_GIT_URL_BASE)/polly.git
 
 ifeq ($(BUILD_LLDB), 1)
 BUILD_LLVM_CLANG = 1
@@ -479,6 +480,12 @@ ifeq ($(BUILD_LLVM_CLANG),1)
 	([ ! -d llvm-$(LLVM_VER)/tools/clang ] && \
 		git clone $(LLVM_GIT_URL_CLANG) llvm-$(LLVM_VER)/tools/clang  ) || \
 		(cd llvm-$(LLVM_VER)/tools/clang  && \
+		git pull --ff-only)
+endif
+ifeq ($(BUILD_LLVM_POLLY),1)
+	([ ! -d llvm-$(LLVM_VER)/tools/polly ] && \
+		git clone $(LLVM_GIT_URL_POLLY) llvm-$(LLVM_VER)/tools/polly  ) || \
+		(cd llvm-$(LLVM_VER)/tools/polly  && \
 		git pull --ff-only)
 endif
 ifeq ($(BUILD_LLDB),1)

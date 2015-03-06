@@ -143,6 +143,9 @@ LLVM_ASSERTIONS = 0
 LLVM_DEBUG = 0
 # set to 1 to get clang and compiler-rt
 BUILD_LLVM_CLANG = 0
+
+# Polly only works with LLVM_VER=svn or an LLVM version newer than 3.6
+BUILD_LLVM_POLLY = 0
 # set to 1 to get lldb (often does not work, no chance with llvm3.2 and earlier)
 # see http://lldb.llvm.org/build.html for dependencies
 BUILD_LLDB = 0

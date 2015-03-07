@@ -66,8 +66,8 @@ endif
 julia-deps: git-submodules |  $(DIRS) $(build_datarootdir)/julia/base $(build_datarootdir)/julia/test $(build_docdir) $(build_sysconfdir)/julia/juliarc.jl $(build_man1dir)/julia.1
 	@$(MAKE) $(QUIET_MAKE) -C deps
 
-julia-base: julia-deps
-	@$(MAKE) $(QUIET_MAKE) -C base
+julia-base:
+	
 
 julia-src-%: julia-deps
 	@$(MAKE) $(QUIET_MAKE) -C src libjulia-$*
@@ -162,17 +162,13 @@ else
 endif
 
 $(build_private_libdir)/sys0.o: | $(build_private_libdir)
-	@$(call PRINT_JULIA, cd base && \
-	$(call spawn,$(JULIA_EXECUTABLE)) -C $(JULIA_CPU_TARGET) --build $(call cygpath_w,$(build_private_libdir)/sys0) sysimg.jl)
+	echo sys0
 
 BASE_SRCS := $(wildcard base/*.jl base/*/*.jl base/*/*/*.jl)
 
 COMMA:=,
 $(build_private_libdir)/sys.o: VERSION $(BASE_SRCS) $(build_docdir)/helpdb.jl $(build_private_libdir)/sys0.$(SHLIB_EXT)
-	@$(call PRINT_JULIA, cd base && \
-	$(call spawn,$(JULIA_EXECUTABLE)) -C $(JULIA_CPU_TARGET) --build $(call cygpath_w,$(build_private_libdir)/sys) \
-		-J$(call cygpath_w,$(build_private_libdir))/$$([ -e $(build_private_libdir)/sys.ji ] && echo sys.ji || echo sys0.ji) -f sysimg.jl \
-		|| { echo '*** This error is usually fixed by running `make clean`. If the error persists$(COMMA) try `make cleanall`. ***' && false; } )
+	echo sys
 
 $(build_bindir)/stringreplace: contrib/stringreplace.c | $(build_bindir)
 	@$(call PRINT_CC, $(CC) -o $(build_bindir)/stringreplace contrib/stringreplace.c)
@@ -479,7 +475,7 @@ distcleanall: cleanall
 
 .PHONY: default debug release check-whitespace release-candidate \
 	julia-debug julia-release \
-	julia-deps julia-ui-* julia-src-* julia-symlink-* julia-base julia-sysimg-* \
+	julia-deps julia-ui-* julia-src-* julia-symlink-* julia-sysimg-* \
 	test testall testall1 test-* clean distcleanall cleanall \
 	run-julia run-julia-debug run-julia-release run \
 	install binary-dist light-source-dist.tmp light-source-dist \
